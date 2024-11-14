@@ -1,3 +1,4 @@
+ver se quando o motor é alimentado com 3-6v ele gira mais devagar. talvez tentar usar outro tipo de
 montar o sistema pwm pra controlar o motor DC que vai girar o carretel. tentar fazer um circuito simples, mas tentar fazer um jeito que eu consiga girar ele o mais lento possível.
 usar sensores (capacitivos, ou fim de curso, ou algum tipo de sensor) nas duas extremidades do carretel. quando o motor do driver passar nesses sensores, ele vai imediatamente mandar o motor ir pora outra direção, até que ele bata no outro sensor e assim repetindo esse ciclp.
 adaptar o código pros dois motores mexerem apenas enquanto o fim de curso estiver precionado, e quando ele for despressionado, o circuito irá imediatamente parar.
