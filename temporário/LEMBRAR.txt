@@ -1,0 +1,4 @@
+fim de curso: 13 no pino diital e 14 no GND (ou ao contrário, não me lembro).
+
+DRIVER: R_EN e L_EN no VCC, o rpwm e lpwm são nos pinos digitais.
+
