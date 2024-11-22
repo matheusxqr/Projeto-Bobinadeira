@@ -1,7 +1,3 @@
-ver se quando o motor é alimentado com 3-6v ele gira mais devagar. talvez tentar usar outro tipo de fonte, ou usar um regulador de tensão para os dois.
-montar o sistema pwm pra controlar o motor DC que vai girar o carretel OU USAR O DRIVER PRONTO DO SOR. tentar fazer um circuito simples, mas tentar fazer um jeito que eu consiga girar ele o mais lento possível.
-usar sensores (capacitivos, ou fim de curso, ou algum tipo de sensor) nas duas extremidades do carretel. quando o motor do driver passar nesses sensores, ele vai imediatamente mandar o motor ir pora outra direção, até que ele bata no outro sensor e assim repetindo esse ciclp.
-adaptar o código pros dois motores mexerem apenas enquanto o fim de curso estiver precionado, e quando ele for despressionado, o circuito irá imediatamente parar.
 adaptar a velocidade tanto do motor com o driver tanto do motor DC para que os dois trabalhem em sincronia, fazendo certinho uma volta no carretel inteira uma do lado da outra, até o número de voltas desejadas
 fazer um código para que apareça no monitor serial quantas voltas a bobinadeira já fez nno carretel. fazer isso calculando quantas voltas por segundo os dois motores em sincronia fazem e ir atualizando no monitor serial a cada segundo.
 setar um número máximo de voltas que a bobinadeira pode fazer e escrever em uma variável. quando o número de voltas exibido no monitor serial for maior que esse número, o circuito irá parar totalmente.
