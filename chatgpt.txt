@@ -1,0 +1,65 @@
+Analisando o código e a descrição do problema, parece que a causa das "travadas" ou "engasgadas" do motor após bater em um dos fins de curso (fc1 ou fc2) pode estar relacionada ao modo como o controle do motor e a leitura dos estados dos fins de curso estão sendo feitos.
+
+Possíveis Causas:
+Mudança Repentina de Estado nas Variáveis do Motor:
+
+Quando o código detecta um fim de curso (fc1 ou fc2), ele faz uma mudança imediata na direção do motor, mas isso pode estar causando uma troca rápida entre as variáveis motorDireita e motorEsquerda, o que pode gerar um comportamento indesejado, principalmente quando o motor está tentando reagir à mudança de direção muito rapidamente.
+Controle do PWM:
+
+Você está usando o comando analogWrite para controlar a velocidade do motor, e no momento em que o fim de curso é acionado, pode ocorrer uma mudança brusca de 255 para 0 (ou vice-versa) na velocidade do motor. Isso pode fazer o motor dar uma travada momentânea, especialmente se o driver do motor ou o próprio motor não responder bem a mudanças rápidas de sinal PWM.
+Contagem de Voltas e Atrasos de Tempo:
+
+A lógica de contagem de voltas e o uso de millis() para medir o tempo pode estar gerando um comportamento inesperado, especialmente após a ativação de um fim de curso. Isso porque o contador de voltas (contadorVoltas) pode continuar a incrementar sem uma checagem adequada após a detecção do fim de curso, o que pode gerar um conflito entre a lógica de movimento e a contagem.
+Leitura de Entradas Digitais:
+
+O código lê as entradas digitais (digitalRead(fc1) e digitalRead(fc2)) e, com base nisso, altera os estados do motor. Se os interruptores de fim de curso não forem estáveis ou tiverem um "bounce" (falta de estabilidade nas leituras), isso pode causar a alteração rápida e indesejada dos estados do motor, resultando em movimentos instáveis. Isso pode ser especialmente crítico porque o código não tem uma debouncing (filtragem) nas leituras dos fins de curso.
+Possíveis Soluções:
+Adicionar Debouncing para os Fins de Curso:
+
+Você pode implementar um pequeno atraso ou técnica de debouncing para as leituras dos fins de curso, a fim de garantir que as transições entre os estados do fim de curso sejam estáveis.
+Por exemplo, depois de detectar uma mudança no estado de fc1 ou fc2, você pode adicionar um pequeno delay(50) ou usar uma lógica para garantir que a mudança de estado só ocorra uma vez por tempo suficiente, evitando leituras múltiplas e rápidas.
+Exemplo:
+
+cpp
+Copiar código
+if (ultimoEstadofc1 == HIGH && estadoAtualfc1 == LOW) {
+  delay(50); // Debouncing
+  estadoAtualfc1 = digitalRead(fc1); // Lê novamente para garantir estabilidade
+  if (estadoAtualfc1 == LOW) {
+    Serial.println("FIM DE CURSO 1 PRESIONADO");
+    motorDireita = true;
+    motorEsquerda = false;
+    motorParado = false;
+    analogWrite(motorDC, 255); 
+    direcaoMotor = true;
+  }
+}
+Evitar Mudanças de Direção Abruptas:
+
+Ao detectar um fim de curso, ao invés de imediatamente forçar uma direção oposta, você pode dar um pequeno tempo de espera ou controlar a velocidade do motor para suavizar a transição.
+Isso pode ser feito alterando a forma como a direção do motor é alterada após a detecção de um fim de curso.
+Revisão do Controle de Velocidade:
+
+Tente modificar o valor de PWM gradualmente, em vez de alterar abruptamente para 255 ou 0. Isso pode ajudar a reduzir o impacto de mudanças rápidas na velocidade.
+Exemplo:
+
+cpp
+Copiar código
+if (motorDireita) {
+  for (int i = 0; i <= 255; i++) {
+    analogWrite(rpwm, i);  
+    analogWrite(lpwm, 0);
+    delay(10);  // Tempo para fazer a transição gradual
+  }
+} else if (motorEsquerda) {
+  for (int i = 0; i <= 255; i++) {
+    analogWrite(rpwm, 0);  
+    analogWrite(lpwm, i); 
+    delay(10);  // Tempo para fazer a transição gradual
+  }
+}
+Revisar o Controle do Contador de Voltas:
+
+Após a detecção de um fim de curso, o contador de voltas pode não estar sendo atualizado corretamente. Isso pode causar um conflito no controle do motor. Garanta que a contagem de voltas seja adequada ou resetada conforme necessário para evitar inconsistências.
+Conclusão:
+O problema parece ser causado por uma combinação de mudanças abruptas nos estados do motor e entradas instáveis dos fins de curso, o que pode estar gerando as "travadas" ou "engasgadas". A solução envolve principalmente a implementação de técnicas de debouncing para as leituras dos fins de curso e suavização na transição de controle do motor.
