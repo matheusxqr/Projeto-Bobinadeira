@@ -1,10 +1,3 @@
-// código q eu acho que vai funcionar, tem todas as funções mas eu não sei se vai dar certo na prática.
-
-
-
-
-
-
 const int rpwm = 2; // controle pwm do lado direito do motor 1
 const int lpwm = 3; // controle pwm do lado esquerdo do motor 2
 const int fcpedal = 4; // fim de curso do pedal
