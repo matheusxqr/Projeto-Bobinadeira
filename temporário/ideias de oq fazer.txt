@@ -1,6 +1,0 @@
-adaptar a velocidade tanto do motor com o driver tanto do motor DC para que os dois trabalhem em sincronia, fazendo certinho uma volta no carretel inteira uma do lado da outra, até o número de voltas desejadas
-fazer um código para que apareça no monitor serial quantas voltas a bobinadeira já fez nno carretel. fazer isso calculando quantas voltas por segundo os dois motores em sincronia fazem e ir atualizando no monitor serial a cada segundo.
-setar um número máximo de voltas que a bobinadeira pode fazer e escrever em uma variável. quando o número de voltas exibido no monitor serial for maior que esse número, o circuito irá parar totalmente.
-ligar o arduino com fonte externa, talvez com uma fonte de 12v e tranformando em 5v.
-usar uma fonte de alimentação pra alimentar todo o circuito. 
-fazer um sistema para o arduino salvar na memória eeprom do se o primeiro motor está girando no sentido horário ou no sentido anti-horário, e caso o operador tirar o pé do pedal, quando ele botar de novo, o motor vai continuar girando na mesma direção, até bater no sensor. 
